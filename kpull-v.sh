@@ -1,5 +1,6 @@
 #This script will:
 
+#sriov
 ##Group worker nodes based on continuous IP addresses and print each group with a serial number.
 ##Prompt the user to select a group.
 ##Retrieve and display the number of GPUs, server model, and check if the allocatable value for "rdma/hca_shared_devices_c" is 500 for each server in the selected group.
