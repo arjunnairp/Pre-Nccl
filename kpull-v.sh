@@ -1,6 +1,5 @@
 #This script will:
 
-#sriov
 ##Group worker nodes based on continuous IP addresses and print each group with a serial number.
 ##Prompt the user to select a group.
 ##Retrieve and display the number of GPUs, server model, and check if the allocatable value for "rdma/hca_shared_devices_c" is 500 for each server in the selected group.
@@ -64,13 +63,30 @@ echo -e "\e[32mDetails for Group $group_number:\e[0m"
 for node in $selected_group; do
   gpus=$(kubectl get node $node -o jsonpath='{.status.allocatable.nvidia\.com/gpu}')
   model=$(kubectl get node $node -o jsonpath='{.metadata.labels.kubernetes\.io/hostname}')
-  rdma=$(kubectl get node $node -o jsonpath='{.status.allocatable.rdma/hca_shared_devices_c}')
+  sriov1=$(kubectl get node $node -o jsonpath='{.status.allocatable.nvidia\.com/sriov_resource_xe1}')
+  sriov2=$(kubectl get node $node -o jsonpath='{.status.allocatable.nvidia\.com/sriov_resource_xe2}')
+  sriov3=$(kubectl get node $node -o jsonpath='{.status.allocatable.nvidia\.com/sriov_resource_xe3}')
+  sriov4=$(kubectl get node $node -o jsonpath='{.status.allocatable.nvidia\.com/sriov_resource_xe4}')
+  sriov5=$(kubectl get node $node -o jsonpath='{.status.allocatable.nvidia\.com/sriov_resource_xe5}')
+  sriov6=$(kubectl get node $node -o jsonpath='{.status.allocatable.nvidia\.com/sriov_resource_xe6}')
+  sriov7=$(kubectl get node $node -o jsonpath='{.status.allocatable.nvidia\.com/sriov_resource_xe7}')
+  sriov8=$(kubectl get node $node -o jsonpath='{.status.allocatable.nvidia\.com/sriov_resource_xe8}')
 
   echo -e "\e[1m$node\e[0m - GPUs: $gpus, Model: $model"
 
-  if [[ "$rdma" == "500" ]]; then
-    echo -e "Allocatable rdma/hca_shared_devices_c is 500 for $node \e[1m\e[32m\u2713\e[0m"
-  else
-    echo -e "\e[31mAllocatable rdma/hca_shared_devices_c is not 500 for $node \e[1m\e[31m\u2717\e[0m"
-  fi
+  all_8=true
+
+ for i in {1..8}; do
+   sriov_var="sriov$i"
+   if [[ "${!sriov_var}" != "8" ]]; then
+     all_8=false
+     break
+   fi
+ done
+
+ if [[ "$all_8" == "true" ]]; then
+   echo -e "Allocatable sriov_resource_xe1-xe8 is 8 for $node \e[1m\e[32m\u2713\e[0m"
+ else
+   echo -e "\e[31mAllocatable sriov_resource_xe1-xe8 is not 8 for $node \e[1m\e[31m\u2717\e[0m"
+ fi
 done

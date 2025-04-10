@@ -7,8 +7,6 @@
 
 # NICs
 eth2
-eth3
-eth4
 eth5
 eth6
 eth7
@@ -19,4 +17,3 @@ eth11
 
 # Modules
 nvidia_peermem
-ib_peer_mem
