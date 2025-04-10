@@ -1,0 +1,21 @@
+# Server IPs
+172.24.20.61
+172.24.20.62
+172.24.20.63
+172.24.20.64
+
+# NICs
+eth2
+eth3
+eth4
+eth5
+eth6
+eth7
+eth8
+eth9
+eth10
+eth11
+
+# Modules
+nvidia_peermem
+ib_peer_mem
