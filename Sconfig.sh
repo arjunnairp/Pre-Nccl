@@ -21,7 +21,7 @@ while IFS= read -r line; do
     continue
   elif [[ $line =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
     server_ips+=("$line")
-  elif [[ $line =~ ^eth[0-9]+$ ]]; then
+  elif [[ $line =~ ^(eth[0-9]+|enp[0-9]+s[0-9]+np[0-9]+)$ ]]; then
     nics+=("$line")
   elif [[ $line =~ ^[a-zA-Z0-9_-]+$ ]]; then
     modules+=("$line")
